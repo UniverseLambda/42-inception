@@ -2,10 +2,12 @@ volumes:
   wordpress_files:
     driver: local
     driver_opts:
+      type: tmpfs
       device: /home/clsaad/data/wordpress-files
   wordpress_db:
     driver: local
     driver_opts:
+      type: tmpfs
       device: /home/clsaad/data/wordpress-db
 
 services:
@@ -13,3 +15,14 @@ services:
     build: containers/nginx
     ports:
       - "443:443"
+    networks:
+      - 42_network
+  wordpress:
+    build: containers/wordpress
+    networks:
+      - 42_network
+    volumes:
+      - "wordpress_files:/var/www/html"
+
+networks:
+  42_network: {}

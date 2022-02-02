@@ -17,3 +17,4 @@ re: stop start
 
 bootstrap-vm:
 	mkdir -p $(HOME)/data
+	sudo echo '127.0.0.1  clsaad.42.fr' >> /etc/hosts
