@@ -1,0 +1,15 @@
+volumes:
+  wordpress_files:
+    driver: local
+    driver_opts:
+      device: /home/clsaad/data/wordpress-files
+  wordpress_db:
+    driver: local
+    driver_opts:
+      device: /home/clsaad/data/wordpress-db
+
+services:
+  nginx:
+    build: containers/nginx
+    ports:
+      - "443:443"
