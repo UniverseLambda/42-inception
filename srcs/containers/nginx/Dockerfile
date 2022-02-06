@@ -1,7 +1,7 @@
 FROM alpine:3.15.0
 
 RUN apk update 
-RUN apk add --no-cache nginx openssl bash
+RUN apk add --no-cache nginx openssl
 
 # FROM debian:buster
 
@@ -14,7 +14,7 @@ RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 COPY ./data/nginx.conf /etc/nginx/nginx.conf
 
 RUN mkdir -p /var/www/html
-RUN echo "hellooooo" > /var/www/html/index.html
+# RUN echo "hellooooo" > /var/www/html/index.html
 
 # Configuring SSL
 RUN mkdir -p /etc/nginx/ssl

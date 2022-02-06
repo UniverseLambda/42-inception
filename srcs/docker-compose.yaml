@@ -1,15 +1,3 @@
-volumes:
-  wordpress_files:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: /home/clsaad/data/wordpress-files
-  wordpress_db:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: /home/clsaad/data/wordpress-db
-
 services:
   nginx:
     build: containers/nginx
@@ -17,12 +5,38 @@ services:
       - "443:443"
     networks:
       - 42_network
+    volumes:
+      - wordpress_files:/var/www/html
+  mariadb:
+    build: containers/mariadb
+    networks:
+      - 42_network
+    volumes:
+      - wordpress_db:/var/lib/mysql
+    env_file:
+      .env
   wordpress:
     build: containers/wordpress
     networks:
       - 42_network
     volumes:
-      - "wordpress_files:/var/www/html"
+      - wordpress_files:/var/www/html
+    env_file:
+      .env
 
 networks:
   42_network: {}
+
+volumes:
+  wordpress_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/clsaad/data/wordpress-files
+  wordpress_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/clsaad/data/wordpress-db
