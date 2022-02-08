@@ -1,7 +1,7 @@
 FROM alpine:3.15.0
 
 RUN apk update 
-RUN apk add --no-cache php8 php8-fpm php8-mysqli
+RUN apk add --no-cache php8 php8-fpm php8-mysqli bash
 
 COPY ./data/www.conf /etc/php8/php-fpm.d/www.conf
 
@@ -22,4 +22,4 @@ RUN echo $USER_NAME
 RUN sed -i "s|%%WORDPRESS_DB_USER%%|$USER_NAME|" /clsaad_container_data/wp-config.php
 RUN sed -i "s|%%WORDPRESS_DB_PSSWD%%|$USER_PASSWORD|" /clsaad_container_data/wp-config.php
 
-CMD ["/bin/sh", "/clsaad_container_data/start.sh"]
+CMD ["bash", "/clsaad_container_data/start.sh"]

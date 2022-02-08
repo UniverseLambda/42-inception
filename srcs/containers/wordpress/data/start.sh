@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Checking if we need to setup mysql database
 if [[ ! -d /var/www/html/wordpress ]]; then
