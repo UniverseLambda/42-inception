@@ -1,12 +1,16 @@
 services:
-  nginx:
-    build: containers/nginx
-    ports:
-      - "443:443"
+  wordpress:
+    build:
+      context: containers/wordpress
+      args:
+        USER_NAME: ${USER_NAME}
+        USER_PASSWORD: ${USER_PASSWORD}
     networks:
       - 42_network
     volumes:
       - wordpress_files:/var/www/html
+    env_file:
+      .env
   mariadb:
     build: containers/mariadb
     networks:
@@ -15,14 +19,14 @@ services:
       - wordpress_db:/var/lib/mysql
     env_file:
       .env
-  wordpress:
-    build: containers/wordpress
+  nginx:
+    build: containers/nginx
+    ports:
+      - "443:443"
     networks:
       - 42_network
     volumes:
       - wordpress_files:/var/www/html
-    env_file:
-      .env
 
 networks:
   42_network: {}
