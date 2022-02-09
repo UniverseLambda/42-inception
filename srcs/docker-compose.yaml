@@ -20,7 +20,12 @@ services:
     env_file:
       .env
   nginx:
-    build: containers/nginx
+    build:
+      context:
+        containers/nginx
+      args:
+        DOCKER_TLS_CERTIFICATE: ${DOCKER_TLS_CERTIFICATE}
+        DOCKER_TLS_KEY: ${DOCKER_TLS_KEY}
     ports:
       - "443:443"
     networks:
