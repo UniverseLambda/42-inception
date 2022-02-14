@@ -1,4 +1,4 @@
-.PHONY: start stop clean re bootstrap-vm
+.PHONY: start stop clean fclean re bootstrap-vm
 .DEFAULT: start
 
 all: start
