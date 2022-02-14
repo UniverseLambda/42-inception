@@ -22,6 +22,5 @@ bootstrap-vm:
 	sudo pacman -Syyu --noconfirm
 	sudo pacman -S --noconfirm  docker docker-compose
 	sudo systemctl enable docker
-	sudo systemctl start docker
 	sudo chmod 666 /var/run/docker.sock
 	sudo sh -c "echo '127.0.0.1  clsaad.42.fr' >> /etc/hosts"
