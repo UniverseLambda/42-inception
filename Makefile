@@ -4,6 +4,7 @@
 all: start
 
 start:
+	mkdir -p $(HOME)/data
 	cd ./srcs/ && docker compose up --build -d
 
 stop:
@@ -16,5 +17,4 @@ fclean: clean
 re: stop start
 
 bootstrap-vm:
-	mkdir -p $(HOME)/data
-	sudo echo '127.0.0.1  clsaad.42.fr' >> /etc/hosts
+	sudo sh -c "echo '127.0.0.1  clsaad.42.fr' >> /etc/hosts"
