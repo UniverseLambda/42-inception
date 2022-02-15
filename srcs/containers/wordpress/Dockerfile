@@ -5,7 +5,7 @@ EXPOSE 9000
 ARG USER_NAME
 ARG USER_PASSWORD
 
-RUN apk update 
+RUN apk update
 RUN apk add --no-cache php8 php8-fpm php8-mysqli bash
 
 COPY ./data/www.conf /etc/php8/php-fpm.d/www.conf
