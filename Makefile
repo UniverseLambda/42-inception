@@ -4,9 +4,9 @@
 all: start
 
 start:
-	mkdir -p $(HOME)/data
-	mkdir -p $(HOME)/data/wordpress-files
-	mkdir -p $(HOME)/data/wordpress-db
+	mkdir -p /home/clsaad/data
+	mkdir -p /home/clsaad/data/wordpress-files
+	mkdir -p /home/clsaad/data/wordpress-db
 	cd ./srcs/ && docker compose up --build -d
 
 stop:

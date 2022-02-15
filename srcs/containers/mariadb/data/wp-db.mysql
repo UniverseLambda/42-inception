@@ -394,7 +394,7 @@ CREATE TABLE `wp_users` (
 
 LOCK TABLES `wp_users` WRITE;
 /*!40000 ALTER TABLE `wp_users` DISABLE KEYS */;
-INSERT INTO `wp_users` VALUES (1,'LuffyLover','$P$BHy0UR.ggaa.PmuCbNLfZ8OFqZZAIx0','luffylover','mytotally@real.mail','https://clsaad.42.fr','2022-02-07 17:00:17','',0,'LuffyLover');
+INSERT INTO `wp_users` VALUES (1,'LuffyLover','5f84050edeb1d08748403d283ff2bc3d','luffylover','mytotally@real.mail','https://clsaad.42.fr','2022-02-07 17:00:17','',0,'LuffyLover');
 /*!40000 ALTER TABLE `wp_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
