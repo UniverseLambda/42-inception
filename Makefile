@@ -5,6 +5,9 @@ NAME :=	ircserv
 
 SRCS :=	src/main.cpp
 
+include src/internal/Include.mk
+include src/data/Include.mk
+
 INCS :=
 
 SRCS_DIR := src
@@ -13,7 +16,7 @@ OBJS_DIR := .objs
 CXX :=	c++
 LD := $(CXX)
 
-CXX_FLAGS := -g3 -Wall -Wextra -Werror -std=c++98 #-fsanitize=address -fsanitize=undefined
+CXX_FLAGS := -g3 -Wall -Wextra -Werror -std=c++98 -Iinc #-fsanitize=address -fsanitize=undefined
 LD_FLAGS := -g3 -Wall -Wextra -Werror -std=c++98 #-fsanitize=address -fsanitize=undefined
 
 OBJS :=	$(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
