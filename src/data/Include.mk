@@ -1,2 +1,3 @@
 
-SRCS += src/data/User.cpp
+SRCS += src/data/User.cpp \
+		src/data/Channel.cpp \

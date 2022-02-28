@@ -1,19 +1,19 @@
 #include <data/User.hpp>
+#include <data/Channel.hpp>
 
 namespace data {
 	User::User(): mFd(-1) {
 
 	}
 
-	User::User(int fd): mFd(fd) {
-
-	}
+	User::User(int fd): mFd(fd) {}
 
 	User::User(const User &copy):
 		mFd(copy.mFd),
-		mUsername(copy.mUsername),
 		mNickname(copy.mNickname),
-		mPrivilege(copy.mPrivilege) {
+		mUsername(copy.mUsername),
+		mRealname(copy.mRealname),
+		mAuthenticated(copy.mAuthenticated) {
 
 	}
 
@@ -21,9 +21,10 @@ namespace data {
 
 	User &User::operator=(const User &rhs) {
 		mFd = rhs.mFd;
-		mUsername = rhs.mUsername;
 		mNickname = rhs.mNickname;
-		mPrivilege = rhs.mPrivilege;
+		mUsername = rhs.mUsername;
+		mRealname = rhs.mRealname;
+		mAuthenticated = rhs.mAuthenticated;
 
 		return *this;
 	}
@@ -36,8 +37,12 @@ namespace data {
 		mUsername = username;
 	}
 
-	void User::setPrivilege(UserPrivilege privilege) {
-		mPrivilege = privilege;
+	void User::setRealname(const std::string &realname) {
+		mRealname = realname;
+	}
+
+	void User::setAuthenticated(bool authenticated) {
+		mAuthenticated = authenticated;
 	}
 
 	std::string User::getNickname() const {
@@ -48,7 +53,15 @@ namespace data {
 		return mUsername;
 	}
 
-	UserPrivilege User::setPrivilege() const {
-		return mPrivilege;
+	std::string User::getRealname() const {
+		return mRealname;
+	}
+
+	bool User::getAuthenticated() const {
+		return mAuthenticated;
+	}
+
+	bool User::channelDestroyed(ChannelPtr channel) {
+		return mChannels.erase(channel) != 0;
 	}
 } // namespace data

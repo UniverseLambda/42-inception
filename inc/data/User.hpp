@@ -1,19 +1,20 @@
 #pragma once
 
 #include <string>
+#include <set>
+
+#include <data/Forward.hpp>
 
 namespace data {
-	enum UserPrivilege {
-		PRIV_USER,
-		PRIV_OPERATOR,
-	};
-
 	class User {
 	private:
 		int mFd;
-		std::string mUsername;
 		std::string mNickname;
-		UserPrivilege mPrivilege;
+		std::string mUsername;
+		std::string mRealname;
+		bool mAuthenticated;
+
+		std::set<ChannelPtr> mChannels;
 
 	public:
 		User();
@@ -25,10 +26,14 @@ namespace data {
 
 		void setNickname(const std::string &nickname);
 		void setUsername(const std::string &username);
-		void setPrivilege(UserPrivilege privilege);
+		void setRealname(const std::string &realname);
+		void setAuthenticated(bool auth);
 
 		std::string getNickname() const;
 		std::string getUsername() const;
-		UserPrivilege setPrivilege() const;
+		std::string getRealname() const;
+		bool getAuthenticated() const;
+
+		bool channelDestroyed(ChannelPtr channel);
 	};
 }
