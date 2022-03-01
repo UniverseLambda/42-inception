@@ -1,2 +1,2 @@
-
-# SRCS += src/internal/
+SRCS := $(SRCS) \
+		src/internal/Server.cpp

@@ -3,7 +3,7 @@
 
 NAME :=	ircserv
 
-SRCS :=	src/main.cpp
+SRCS = src/main.cpp
 
 include src/internal/Include.mk
 include src/data/Include.mk
