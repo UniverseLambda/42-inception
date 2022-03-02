@@ -65,7 +65,8 @@ namespace data {
 		return mChannels.erase(channel) != 0;
 	}
 
-	bool User::sendMessage(internal::Message) {
+	bool User::sendMessage(internal::Message message) {
+		message.trySetChannel(mNickname);
 		return false;
 	}
 } // namespace data
