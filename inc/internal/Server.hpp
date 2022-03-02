@@ -27,7 +27,8 @@ namespace internal {
 		bool removeUser(int fd);
 
 		data::UserPtr getUser(int fd) const;
-
 		data::ChannelPtr getChannel(std::string name) const;
+
+		data::ChannelPtr getOrCreateChannel(std::string name);
 	};
 } // namespace internal

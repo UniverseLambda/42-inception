@@ -1,7 +1,9 @@
 #include <internal/Server.hpp>
 #include <data/User.hpp>
 #include <data/Channel.hpp>
+
 #include <iostream>
+#include <stdexcept>
 
 namespace internal {
 	Server::Server(std::string password): mPassword(password) {}
@@ -32,8 +34,8 @@ namespace internal {
 		data::UserPtr user = new data::User(fd);
 
 		if (!mUsers.insert(std::make_pair(fd, user)).second) {
-			std::cerr << "Woops! Duplicate fd" << std::endl;
-			throw std::runtime_error("Woops. Duplicate ");
+			std::cerr << "Woops! Duplicate fd: " << fd << std::endl;
+			throw std::runtime_error("Woops. Duplicate fd");
 		}
 
 		return user;
@@ -60,4 +62,17 @@ namespace internal {
 		return NULL;
 	}
 
+	data::ChannelPtr Server::getOrCreateChannel(std::string name) {
+		try {
+			data::ChannelPtr chan = getChannel(name);
+
+			if (chan == NULL) {
+				chan = new data::Channel(name);
+				mChannels.insert(std::make_pair(name, chan));
+			}
+
+			return chan;
+		} catch (...) {}
+		return NULL;
+	}
 } // namespace internal
