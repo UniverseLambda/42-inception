@@ -2,17 +2,24 @@
 
 #include <string>
 #include <set>
+#include <map>
+
+#include <stdexcept>
 
 #include "Forward.hpp"
 
+#include <internal/Message.hpp>
+
 namespace data {
 	class Channel {
+	public:
 		enum ChannelMode {
 															// Flags
+			CMODE_NONE							= 0x000,
 			CMODE_OPERATOR						= 0x001,	// o
 			CMODE_PRIVATE						= 0x002,	// p
 			CMODE_SECRET						= 0x004,	// s
-			CMODE_INVITE						= 0x08,		// i
+			CMODE_INVITE						= 0x008,	// i
 			CMODE_TOPIC_OP_ONLY					= 0x010,	// t
 			CMODE_NO_OUTSIDE_CLIENT				= 0x020,	// n
 			CMODE_MODERATED						= 0x040,	// m
@@ -23,16 +30,17 @@ namespace data {
 		};
 
 		enum UserMode {
-			UMODE_INVISIBLE			= 0x01,
-			UMODE_NOTICE_RECEIPT	= 0x02,
-			UMODE_WALLOPS_RECEIVER 	= 0x04,
-			UMODE_OPERATOR			= 0x08,
+			UMODE_NONE							= 0x00,
+			UMODE_INVISIBLE						= 0x01,
+			UMODE_NOTICE_RECEIPT				= 0x02,
+			UMODE_WALLOPS_RECEIVER				= 0x04,
+			UMODE_OPERATOR						= 0x08,
 		};
 
 	private:
 		std::string mName;
-		std::set<UserPtr> mUsers;
-		std::set<UserPtr> mOperators;
+		std::map<UserPtr, UserMode> mUsers;
+		ChannelMode mMode;
 
 	public:
 		Channel(std::string name);
@@ -48,6 +56,20 @@ namespace data {
 		bool userJoin(UserPtr user);
 		void userDisconnected(UserPtr user);
 
-		void setUserMode();
+		bool setUserMode(UserPtr user, UserMode mode, bool addMode);
+		bool setChannelMode(ChannelMode mode, bool addMode);
+
+		UserMode getUserMode(UserPtr user) const throw(std::out_of_range);
+		ChannelMode getChannelMode() const;
+
+		bool sendMessage(UserPtr sender, internal::Message message);
 	};
+
+	Channel::ChannelMode operator|(Channel::ChannelMode cm0, Channel::ChannelMode cm1);
+	Channel::ChannelMode operator&(Channel::ChannelMode cm0, Channel::ChannelMode cm1);
+	Channel::ChannelMode operator~(Channel::ChannelMode cm);
+
+	Channel::UserMode operator|(Channel::UserMode cm0, Channel::UserMode cm1);
+	Channel::UserMode operator&(Channel::UserMode cm0, Channel::UserMode cm1);
+	Channel::UserMode operator~(Channel::UserMode um);
 } // namespace data

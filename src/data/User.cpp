@@ -64,4 +64,8 @@ namespace data {
 	bool User::channelDestroyed(ChannelPtr channel) {
 		return mChannels.erase(channel) != 0;
 	}
+
+	bool User::sendMessage(internal::Message) {
+		return false;
+	}
 } // namespace data

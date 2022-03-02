@@ -5,6 +5,8 @@
 
 #include <data/Forward.hpp>
 
+#include <internal/Message.hpp>
+
 namespace data {
 	class User {
 	private:
@@ -35,5 +37,7 @@ namespace data {
 		bool getAuthenticated() const;
 
 		bool channelDestroyed(ChannelPtr channel);
+
+		bool sendMessage(internal::Message message);
 	};
 }
