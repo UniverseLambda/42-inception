@@ -1,6 +1,7 @@
 #pragma once
 
 #include <data/Forward.hpp>
+#include <iostream>
 
 #include <string>
 
@@ -29,4 +30,6 @@ namespace internal {
 
 		bool trySetChannel(std::string channel);
 	};
+
+	std::ostream &operator<<(std::ostream &os, const Message &message);
 } // namespace internal

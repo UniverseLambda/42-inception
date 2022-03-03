@@ -67,6 +67,7 @@ namespace data {
 
 	bool User::sendMessage(internal::Message message) {
 		message.trySetChannel(mNickname);
+		std::cout << "MESSAGE TO SEND: " << message << std::endl;
 		return false;
 	}
 } // namespace data

@@ -21,11 +21,17 @@ namespace data {
 	public:
 		User();
 		User(int fd);
+
+	private:
 		User(const User &copy);
+
+	public:
 		~User();
 
+	private:
 		User &operator=(const User &rhs);
 
+	public:
 		void setNickname(const std::string &nickname);
 		void setUsername(const std::string &username);
 		void setRealname(const std::string &realname);

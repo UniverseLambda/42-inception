@@ -75,4 +75,11 @@ namespace internal {
 		} catch (...) {}
 		return NULL;
 	}
+
+	bool Server::admitMessage(int fd, std::string command, std::vector<std::string> params) {
+		(void)fd;
+		(void)command;
+		(void)params;
+		return false;
+	}
 } // namespace internal

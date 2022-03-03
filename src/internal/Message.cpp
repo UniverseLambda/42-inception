@@ -44,4 +44,7 @@ namespace internal {
 		return true;
 	}
 
+	std::ostream &operator<<(std::ostream &os, const Message &message) {
+		return (os << message.getOrigin() << "~" << message.getChannel() << ":" << message.getMessage());
+	}
 } // namespace internal
