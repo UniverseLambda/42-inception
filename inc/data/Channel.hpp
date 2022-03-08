@@ -29,38 +29,36 @@ namespace data {
 			CMODE_PASSWORD						= 0x400,	// k
 		};
 
-		enum UserMode {
-			UMODE_NONE							= 0x00,
-			UMODE_INVISIBLE						= 0x01,
-			UMODE_NOTICE_RECEIPT				= 0x02,
-			UMODE_WALLOPS_RECEIVER				= 0x04,
-			UMODE_OPERATOR						= 0x08,
-		};
-
 	private:
+		typedef std::map<UserPtr, bool> user_storage;
+
 		std::string mName;
-		std::map<UserPtr, UserMode> mUsers;
+		user_storage mUsers;
 		ChannelMode mMode;
 
 	public:
 		Channel(std::string name);
+
+	private:
 		Channel(const Channel &orig);
+
+	public:
 		~Channel();
 
+	private:
 		Channel &operator=(const Channel &orig);
 
+	public:
 		std::string getName() const;
 
-		bool isOperator(UserPtr user) const;
+		void setOperator(UserPtr user, bool op) throw(std::out_of_range);
+		bool isOperator(UserPtr user) const throw(std::out_of_range);
+
+		bool setMode(ChannelMode mode, bool addMode);
+		ChannelMode getMode() const;
 
 		bool userJoin(UserPtr user);
 		void userDisconnected(UserPtr user);
-
-		bool setUserMode(UserPtr user, UserMode mode, bool addMode);
-		bool setChannelMode(ChannelMode mode, bool addMode);
-
-		UserMode getUserMode(UserPtr user) const throw(std::out_of_range);
-		ChannelMode getChannelMode() const;
 
 		bool sendMessage(UserPtr sender, internal::Message message);
 	};
@@ -68,8 +66,4 @@ namespace data {
 	Channel::ChannelMode operator|(Channel::ChannelMode cm0, Channel::ChannelMode cm1);
 	Channel::ChannelMode operator&(Channel::ChannelMode cm0, Channel::ChannelMode cm1);
 	Channel::ChannelMode operator~(Channel::ChannelMode cm);
-
-	Channel::UserMode operator|(Channel::UserMode cm0, Channel::UserMode cm1);
-	Channel::UserMode operator&(Channel::UserMode cm0, Channel::UserMode cm1);
-	Channel::UserMode operator~(Channel::UserMode um);
 } // namespace data
