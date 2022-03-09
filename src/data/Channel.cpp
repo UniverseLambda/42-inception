@@ -52,7 +52,7 @@ namespace data {
 		} else {
 			mMode = mMode & (~mode);
 		}
-		return false;
+		return true;
 	}
 
 	Channel::ChannelMode Channel::getMode() const {

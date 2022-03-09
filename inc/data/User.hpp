@@ -5,6 +5,8 @@
 
 #include <data/Forward.hpp>
 
+#include <internal/Forward.hpp>
+
 #include <internal/Message.hpp>
 
 namespace data {
@@ -20,6 +22,8 @@ namespace data {
 
 	private:
 		int mFd;
+		internal::ServerPtr mServer;
+
 		std::string mNickname;
 		std::string mUsername;
 		std::string mRealname;
@@ -31,18 +35,12 @@ namespace data {
 
 	public:
 		User();
-		User(int fd);
-
-	private:
+		User(int fd, internal::ServerPtr server);
 		User(const User &copy);
-
-	public:
 		~User();
 
-	private:
 		User &operator=(const User &rhs);
 
-	public:
 		void setNickname(const std::string &nickname);
 		void setUsername(const std::string &username);
 		void setRealname(const std::string &realname);
@@ -61,7 +59,7 @@ namespace data {
 		bool sendMessage(internal::Message message);
 	};
 
-	User::UserMode operator|(User::UserMode cm0, User::UserMode cm1);
-	User::UserMode operator&(User::UserMode cm0, User::UserMode cm1);
+	User::UserMode operator|(User::UserMode um0, User::UserMode um1);
+	User::UserMode operator&(User::UserMode um0, User::UserMode um1);
 	User::UserMode operator~(User::UserMode um);
 }

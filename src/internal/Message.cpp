@@ -7,13 +7,15 @@ namespace internal {
 
 	Message::Message(const Message &orig):
 		mOrigin(orig.mOrigin),
-		mMessage(orig.mMessage) {}
+		mMessage(orig.mMessage),
+		mChannel(orig.mChannel) {}
 
 	Message::~Message() {}
 
 	Message &Message::operator=(const Message &orig) {
 		mOrigin = orig.mOrigin;
 		mMessage = orig.mMessage;
+		mChannel = orig.mChannel;
 
 		return (*this);
 	}

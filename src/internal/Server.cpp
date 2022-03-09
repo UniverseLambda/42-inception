@@ -6,10 +6,13 @@
 #include <stdexcept>
 
 namespace internal {
-	Server::Server(std::string password): mPassword(password) {}
+	Server::Server() {}
+
+	Server::Server(std::string password, ICommPtr comm): mPassword(password), mCommInterface(comm) {}
 
 	Server::Server(const Server &orig):
 		mPassword(orig.mPassword),
+		mCommInterface(orig.mCommInterface),
 		mUsers(orig.mUsers),
 		mChannels(orig.mChannels) {}
 
@@ -25,13 +28,14 @@ namespace internal {
 
 	Server &Server::operator=(const Server &orig) {
 		mPassword = orig.mPassword;
+		mCommInterface = orig.mCommInterface;
 		mUsers = orig.mUsers;
 		mChannels = orig.mChannels;
 		return *this;
 	}
 
 	data::UserPtr Server::addUser(int fd) {
-		data::UserPtr user = new data::User(fd);
+		data::UserPtr user = new data::User(fd, this);
 
 		if (!mUsers.insert(std::make_pair(fd, user)).second) {
 			std::cerr << "Woops! Duplicate fd: " << fd << std::endl;
@@ -81,5 +85,9 @@ namespace internal {
 		(void)command;
 		(void)params;
 		return false;
+	}
+
+	ICommPtr Server::getCommInterface() const {
+		return mCommInterface;
 	}
 } // namespace internal

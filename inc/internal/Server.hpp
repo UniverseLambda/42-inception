@@ -1,5 +1,6 @@
 #pragma once
 
+#include <internal/Forward.hpp>
 #include <data/Forward.hpp>
 
 #include <map>
@@ -10,20 +11,18 @@ namespace internal {
 	class Server {
 	private:
 		std::string mPassword;
+		ICommPtr mCommInterface;
 		std::map<int, data::UserPtr> mUsers;
 		std::map<std::string, data::ChannelPtr> mChannels;
 
 	public:
-		Server(std::string password);
-	private:
+		Server();
+		Server(std::string password, ICommPtr comm);
 		Server(const Server &orig);
-	public:
 		~Server();
 
-	private:
 		Server &operator=(const Server &orig);
 
-	public:
 		data::UserPtr addUser(int fd);
 		bool removeUser(int fd);
 
@@ -33,5 +32,7 @@ namespace internal {
 		data::ChannelPtr getOrCreateChannel(std::string name);
 
 		bool admitMessage(int fd, std::string command, std::vector<std::string> params = std::vector<std::string>());
+
+		ICommPtr getCommInterface() const;
 	};
 } // namespace internal

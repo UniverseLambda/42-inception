@@ -1,15 +1,19 @@
 #include <data/User.hpp>
 #include <data/Channel.hpp>
 
+#include <internal/Server.hpp>
+#include <internal/IComm.hpp>
+
 namespace data {
-	User::User(): mFd(-1), mMode(UMODE_NONE) {
+	User::User(): mFd(-1), mServer(NULL), mAuthenticated(false), mMode(UMODE_NONE) {
 
 	}
 
-	User::User(int fd): mFd(fd), mMode(UMODE_NONE) {}
+	User::User(int fd, internal::ServerPtr server): mFd(fd), mServer(server), mAuthenticated(false), mMode(UMODE_NONE) {}
 
 	User::User(const User &copy):
 		mFd(copy.mFd),
+		mServer(copy.mServer),
 		mNickname(copy.mNickname),
 		mUsername(copy.mUsername),
 		mRealname(copy.mRealname),
@@ -22,6 +26,7 @@ namespace data {
 
 	User &User::operator=(const User &rhs) {
 		mFd = rhs.mFd;
+		mServer = rhs.mServer;
 		mNickname = rhs.mNickname;
 		mUsername = rhs.mUsername;
 		mRealname = rhs.mRealname;
@@ -85,19 +90,18 @@ namespace data {
 
 	bool User::sendMessage(internal::Message message) {
 		message.trySetChannel(mNickname);
-		std::cout << "MESSAGE TO SEND: " << message << std::endl;
-		return false;
+		return mServer->getCommInterface()->sendMessage(mFd, message);
 	}
 
-	User::UserMode operator|(User::UserMode cm0, User::UserMode cm1) {
-		return static_cast<User::UserMode>(static_cast<int>(cm0) | static_cast<int>(cm1));
+	User::UserMode operator|(User::UserMode um0, User::UserMode um1) {
+		return static_cast<User::UserMode>(static_cast<int>(um0) | static_cast<int>(um1));
 	}
 
-	User::UserMode operator&(User::UserMode cm0, User::UserMode cm1) {
-		return static_cast<User::UserMode>(static_cast<int>(cm0) & static_cast<int>(cm1));
+	User::UserMode operator&(User::UserMode um0, User::UserMode um1) {
+		return static_cast<User::UserMode>(static_cast<int>(um0) & static_cast<int>(um1));
 	}
 
-	User::UserMode operator~(User::UserMode cm) {
-		return static_cast<User::UserMode>(~(static_cast<int>(cm)));
+	User::UserMode operator~(User::UserMode um) {
+		return static_cast<User::UserMode>(~(static_cast<int>(um)));
 	}
 } // namespace data

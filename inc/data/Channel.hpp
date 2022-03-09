@@ -37,18 +37,13 @@ namespace data {
 		ChannelMode mMode;
 
 	public:
+		Channel();
 		Channel(std::string name);
-
-	private:
 		Channel(const Channel &orig);
-
-	public:
 		~Channel();
 
-	private:
 		Channel &operator=(const Channel &orig);
 
-	public:
 		std::string getName() const;
 
 		void setOperator(UserPtr user, bool op) throw(std::out_of_range);
